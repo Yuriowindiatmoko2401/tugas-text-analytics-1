@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import re, string, unicodedata
 import nltk
 import contractions
@@ -12,9 +6,6 @@ from bs4 import BeautifulSoup
 from nltk import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
-
-
-# In[4]:
 
 
 def strip_html(text):
@@ -46,18 +37,25 @@ def stemming(str):
     return stemmer.stem(str)
 
 def cleaning(str):
+
     #remove non-ascii
     str = unicodedata.normalize('NFKD', str).encode('ascii', 'ignore').decode('utf-8', 'ignore')
+
     #remove URLs
     str = re.sub(r'(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))', '', str)
+
     #remove punctuations
     str = re.sub(r'[^\w]|_',' ',str)
+
     #remove digit from string
     str = re.sub("\S*\d\S*", "", str).strip()
+
     #remove digit or numbers
     str = re.sub(r"\b\d+\b", " ", str)
+
     #to lowercase
     str = str.lower()
+
     #Remove additional white spaces
     str = re.sub('[\s]+', ' ', str)
        
@@ -71,16 +69,9 @@ def preprocessing(str):
     
     return str
 
-
-# In[5]:
-
-
 #test the code
 str = "Saya membeli buku dengan Copyright © 2008 John Wiley & Sons, Ltd."
 print(preprocessing(str))
-
-
-# In[ ]:
 
 
 if __name__ == "__main__":
